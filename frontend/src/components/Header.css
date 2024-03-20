@@ -1,0 +1,32 @@
+.header {
+    top: 0;
+    padding: 10px;   
+    display: flex;
+    width: 100%;   
+    background-color: purple;
+}
+
+.links{
+    padding-top: 12px;
+    padding-left: 10px ;
+    color: white;
+    justify-content: flex-end;
+    font-size: large;
+}
+
+
+.about{
+    padding-top: 12px;
+    padding-left: 30px ;
+    justify-content: flex-end;
+    
+}
+
+.contact{
+    padding-top: 12px;
+    padding-left: 20px ;
+    color: white;
+    background-repeat: white;   
+    /* justify-content: flex-end; */
+    font-size: large;    
+}
