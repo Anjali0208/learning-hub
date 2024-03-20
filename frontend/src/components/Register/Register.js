@@ -37,7 +37,7 @@ const Login = () => {
         >
           <div className="row mx-0">
             {/* Illustration */}
-            <div className="col-md-6 d-flex align-items-center justify-content-center px-0">
+            <div className="col-md-6 d-flex align-items-center justify-content-center px-0" style={{ background: "#e5b8f4" }}>
               <img
                 src={login_illustration}
                 alt="Illustration"
