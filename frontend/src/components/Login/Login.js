@@ -59,7 +59,7 @@ const Login = () => {
                     </label>
                     <input
                       type="email"
-                      className="form-control rounded-pill"
+                      className="form-control"
                       id="exampleInputEmail1"
                       aria-describedby="emailHelp"
                     />
@@ -81,7 +81,7 @@ const Login = () => {
                     />
                   </div>
                   <div className="mb-3">
-                    Didn't have an account? <Link to="/signup">signup</Link>
+                    Already have an account? <Link to="/signup">signup</Link>
                   </div>
                   <button
                     type="submit"

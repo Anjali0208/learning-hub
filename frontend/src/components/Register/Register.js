@@ -48,7 +48,7 @@ const Login = () => {
             {/* Login credentials */}
             <div
               className="col-md-6 d-flex align-items-center justify-content-center px-0"
-              style={{ background: "#FFD0EC" }}
+              style={{ background: "#FFD0EC", borderRadius: "15px" }}
             >
               <div className="p-3 w-100">
                 <h2 className="text-center mb-3">Register</h2>
@@ -59,7 +59,7 @@ const Login = () => {
                     </label>
                     <input
                       type="email"
-                      className="form-control rounded-pill"
+                      className="form-control "
                       id="exampleInputEmail1"
                       aria-describedby="emailHelp"
                     />
@@ -68,7 +68,7 @@ const Login = () => {
                     </label>
                     <input
                       type="email"
-                      className="form-control rounded-pill"
+                      className="form-control"
                       id="exampleInputEmail1"
                       aria-describedby="emailHelp"
                     />
