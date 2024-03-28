@@ -44,9 +44,9 @@ const Register = () => {
         <div
           className="container shadow-lg"
           style={{
-            maxWidth: "800px",
+            width: "800px",
             padding: "0",
-            margin: "20px auto 50px", // Adjusted margin to move the container above
+            margin: "80px auto 50px", // Adjusted margin to move the container above
             borderRadius: "15px",
           }}
         >
@@ -127,7 +127,7 @@ const Register = () => {
                   </div>
                   <button
                     type="submit"
-                    className="btn btn-dark rounded-pill w-100"
+                    className="btn btn-dark w-100"
                     style={{ color: "pink", background: "#C147E9" }}
                   >
                     Submit

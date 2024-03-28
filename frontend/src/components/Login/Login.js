@@ -47,10 +47,10 @@ const Login = () => {
         <div
           className="container shadow-lg"
           style={{
-            maxWidth: "800px",
+            width: "900px",
             padding: "0",
-            margin: "50px auto 0", // Adjusted margin to move the container higher
-            borderRadius: "15px", // Added border-radius for rounding the container
+            margin: "20px auto 50px",
+            borderRadius: "15px",
           }}
         >
           <div className="row mx-0">
@@ -59,7 +59,7 @@ const Login = () => {
               <img
                 src={login_illustration}
                 alt="Illustration"
-                style={{ width: "100%", height: "auto" }}
+                style={{ width: "100%", height: "auto", borderRadius: "15px" }}
               />
             </div>
 
