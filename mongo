@@ -1,5 +1,0 @@
-const string = mongodb+srv://kumarianjali020800:<anjali@kumari>@cluster1.0lxr8yc.mongodb.net/?retryWrites=true&w=majority&appName=cluster1
-
-res.json(message: "") => the message will be shown on postman
-res.body => it is our data , to get our data use this
-=> bcryptjs
