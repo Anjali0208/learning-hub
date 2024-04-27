@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const authenticate = require("../middleware/authenticate");
+const cookieParser = require("cookie-parser");
+router.use(cookieParser());
 
 require("../db/conn");
 const User = require("../model/userSchema");
@@ -75,18 +78,17 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body; // user given info
 
     if (!email || !password) {
-      return res.json({ message: "Please fill all fields " });
+      return res.status(400).json({ message: "Please fill all fields " });
     }
 
-    const userLogin = await User.findOne({ email: email }); // first email is from database and 2nd email
-    // is from the req.body
+    const userLogin = await User.findOne({ email: email }); // first email is from database and 2nd email is from the req.body
 
     if (userLogin) {
       // to check if the login's password or the register's password is matching or not with the help of compare()
       const isMatch = await bcrypt.compare(password, userLogin.password);
 
       token = await userLogin.generateAuthToken();
-      // console.log(token);
+      console.log(token);
       res.cookie("jwtoken", token, {
         expires: new Date(Date.now() + 25892000000),
         httpOnly: true,
@@ -96,14 +98,18 @@ router.post("/login", async (req, res) => {
         res.json({ err: "Invalid credential" });
       } else {
         res.json({ message: "signned in successfully" });
-        // console.log(userLogin);
+        console.log(userLogin);
       }
     } else {
-      res.json({ message: "No such user found" });
+      res.status(400).json({ message: "No such user found" });
     }
   } catch (err) {
     console.log(err);
   }
+});
+
+router.get("/about", authenticate, (req, res) => {
+  res.send(req.rootUser);
 });
 
 module.exports = router;

@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import About from "./components/About/About";
 import Course1 from "./components/Course/Course1";
 import Course2 from "./components/Course/Course2";
-import Exam from "./components/Exam/Exam";
+// import Exam from "./components/Exam/Exam";
 import DS from "./components/Course/First_Sem/DS/DS";
 import NotesDS from "./components/Course/First_Sem/DS/NotesDS";
 import QPDS from "./components/Course/First_Sem/DS/QPDS";
@@ -32,6 +32,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
+import Chatting from "./components/Chatting/Chatting";
 
 function App() {
   return (
@@ -42,7 +43,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Register />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/chatting" element={<Chatting />} />
         <Route path="/course_mca_first" element={<Course1 />} />
         <Route path="/course_mca_second" element={<Course2 />} />
         {/* <Route path='/exam' element={<Exam />} /> */}

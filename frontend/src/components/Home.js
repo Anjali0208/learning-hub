@@ -1,5 +1,5 @@
 import React from "react";
-import Banner from "./Banner";
+import Banner from "./Banner/Banner";
 import Card from "./Card";
 import Headline from "./Headline";
 // import { Link } from 'react-router-dom'

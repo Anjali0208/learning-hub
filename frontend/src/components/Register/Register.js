@@ -1,32 +1,79 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import login_illustration from "../../asset/images/login_llustration.png";
 import background_login from "../../asset/images/background_login.png";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassoword, setconfirmPassoword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [allEntry, setAllEntry] = useState([]);
+  // const [name, setName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [confirmPassoword, setconfirmPassoword] = useState("");
+  // const [phone, setPhone] = useState("");
+  // const [allEntry, setAllEntry] = useState([]);
+  const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    cpassword: "",
+  });
+
+  let name, value;
+
+  const handleInputs = (e) => {
     e.preventDefault();
+    name = e.target.name;
+    value = e.target.value;
 
-    if (email && password) {
-      const newEntry = {
-        id: new Date().getTime().toString(),
-        email: email,
-        password: password,
-      };
-      setAllEntry([...allEntry, newEntry]);
-      console.log(newEntry);
-      setEmail("");
-      setPassword("");
-      setPhone("");
-      setName("");
-      setconfirmPassoword("");
+    setUser({ ...user, [name]: value });
+
+    // if (email && password) {
+    // const newEntry = {
+    // id: new Date().getTime().toString(),
+    // email: email,
+    // password: password,
+    // };
+    // setAllEntry([...allEntry, newEntry]);
+    // console.log(newEntry);
+    // setEmail("");
+    // setPassword("");
+    // setPhone("");
+    // setName("");
+    // setconfirmPassoword("");
+    // }
+  };
+
+  const sendData = async (e) => {
+    e.preventDefault();
+    // console.log("1");
+
+    const { name, phone, email, password, cpassword } = user;
+
+    const res = await fetch("/register", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        phone,
+        email,
+        password,
+        cpassword,
+      }),
+    });
+
+    const data = await res.json(); // pending state to progress state
+    console.log("data->", data);
+    // console.log("3");
+    if (data.status === 422 || !data) {
+      window.alert("Invalid Credentials");
+    } else {
+      window.alert("Registration Successful");
+      console.log("successful");
+      navigate("/login");
     }
   };
 
@@ -58,7 +105,7 @@ const Register = () => {
             >
               <div className="p-3 w-100">
                 <h2 className="text-center mb-3">Register</h2>
-                <form onSubmit={handleRegister}>
+                <form method="POST">
                   <div className="mb-3">
                     <label htmlFor="name" className="form-label">
                       Your Name
@@ -67,8 +114,9 @@ const Register = () => {
                       type="text"
                       className="form-control"
                       id="name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      name="name"
+                      value={user.name}
+                      onChange={handleInputs}
                     />
                   </div>
                   <div className="mb-3">
@@ -79,8 +127,9 @@ const Register = () => {
                       type="number"
                       className="form-control"
                       id="num"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      name="phone"
+                      value={user.phone}
+                      onChange={handleInputs}
                     />
                   </div>
                   <div className="mb-3">
@@ -91,8 +140,9 @@ const Register = () => {
                       type="email"
                       className="form-control"
                       id="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      name="email"
+                      value={user.email}
+                      onChange={handleInputs}
                     />
                     <div id="emailHelp" className="form-text">
                       We'll never share your email with anyone else.
@@ -106,8 +156,9 @@ const Register = () => {
                       type="password"
                       className="form-control"
                       id="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      name="password"
+                      value={user.password}
+                      onChange={handleInputs}
                     />
                   </div>
                   <div className="mb-3">
@@ -118,8 +169,9 @@ const Register = () => {
                       type="password"
                       className="form-control"
                       id="confirm"
-                      value={confirmPassoword}
-                      onChange={(e) => confirmPassoword(e.target.value)}
+                      name="cpassword"
+                      value={user.cpassword}
+                      onChange={handleInputs}
                     />
                   </div>
                   <div className="mb-3">
@@ -129,6 +181,7 @@ const Register = () => {
                     type="submit"
                     className="btn btn-dark w-100"
                     style={{ color: "pink", background: "#C147E9" }}
+                    onClick={sendData}
                   >
                     Submit
                   </button>

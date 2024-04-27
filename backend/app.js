@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use(require("./route/auth"));
 
-const User = require("./model/userSchema");
+// const User = require("./model/userSchema");
 
 app.listen(PORT, () => {
   console.log(`server listening on ${PORT}`);
