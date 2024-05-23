@@ -1,8 +1,7 @@
 import React from "react";
-import Header from "../../../Header";
 import Button from "@mui/material/Button";
-import "../../MCA/Course.css";
-import Tables from "../../Tables";
+import "../../Course.css";
+import Tables from "../../../Tables";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";

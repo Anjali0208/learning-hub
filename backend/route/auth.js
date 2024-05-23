@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const authenticate = require("../middleware/authenticate");
 const cookieParser = require("cookie-parser");
 router.use(cookieParser());
+// const multer = require("multer");
 
 require("../db/conn");
 const User = require("../model/userSchema");
@@ -86,9 +87,8 @@ router.post("/login", async (req, res) => {
     if (userLogin) {
       // to check if the login's password or the register's password is matching or not with the help of compare()
       const isMatch = await bcrypt.compare(password, userLogin.password);
-
       token = await userLogin.generateAuthToken();
-      console.log(token);
+      // console.log(token);
       res.cookie("jwtoken", token, {
         expires: new Date(Date.now() + 25892000000),
         httpOnly: true,
@@ -98,7 +98,7 @@ router.post("/login", async (req, res) => {
         res.json({ err: "Invalid credential" });
       } else {
         res.json({ message: "signned in successfully" });
-        console.log(userLogin);
+        // console.log(userLogin);
       }
     } else {
       res.status(400).json({ message: "No such user found" });
@@ -110,6 +110,42 @@ router.post("/login", async (req, res) => {
 
 router.get("/about", authenticate, (req, res) => {
   res.send(req.rootUser);
+});
+
+router.get("/getdata", authenticate, (req, res) => {
+  res.send(req.rootUser);
+});
+
+router.post("/contact", authenticate, async (req, res) => {
+  try {
+    const { name, email, phone, message } = req.body;
+
+    if (!name || !email || !phone || !message) {
+      return res.status(422).json({ error: "Fill the field" });
+    }
+    const userContact = await User.findOne({ _id: req.userId });
+
+    if (userContact) {
+      const userMessage = await userContact.addMessage(
+        name,
+        email,
+        phone,
+        message
+      );
+      await userContact.save();
+      return res.status(201).json({ message: "Message Sent " });
+    } else {
+      return res.status(404).json({ message: "User not found" });
+    }
+    o;
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get("/logout", authenticate, (req, res) => {
+  res.clearCookie("jwtoken", { path: "/" });
+  res.status(200).send(req.rootUser);
 });
 
 module.exports = router;

@@ -37,20 +37,24 @@ const Login = () => {
       headers: {
         "Content-type": "application/json",
       },
+      // credentials: "include",
       body: JSON.stringify({
         email,
         password,
       }),
     });
 
-    const data = await res.json(); // Await the response body parsing
+    const data = await res.json(); // response from the database
 
-    if (data.status === 400 || !data) {
-      // Fix typo in status check
-      window.alert("Invalid Credentials");
-    } else {
-      window.alert("loggin successful");
+    if (res.status === 200 && !data.err) {
+      // Successful login (no error message returned from the server)
+      window.alert("Login successful");
       navigate("/");
+    } else if (res.status === 400) {
+      window.alert("No such user found");
+    } else {
+      // Invalid credentials or other error
+      window.alert("Invalid Credentials");
     }
   };
 
@@ -127,7 +131,7 @@ const Login = () => {
                       id="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      autoComplete="current-password"
+                      autoComplete="off"
                     />
                   </div>
 

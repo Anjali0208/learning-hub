@@ -51,11 +51,16 @@ const Register = () => {
 
     const { name, phone, email, password, cpassword } = user;
 
+    if (password !== cpassword) {
+      return window.alert("password doesn't match");
+    }
+
     const res = await fetch("/register", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
+      // credentials: "include",
       body: JSON.stringify({
         name,
         phone,
@@ -66,13 +71,16 @@ const Register = () => {
     });
 
     const data = await res.json(); // pending state to progress state
-    console.log("data->", data);
+    // console.log("data->", data);
     // console.log("3");
-    if (data.status === 422 || !data) {
-      window.alert("Invalid Credentials");
+    // res.status === 422 || !data
+    if (!data) {
+      window.alert("Fill the details");
+    } else if (res.status === 422) {
+      window.alert("User already exist");
     } else {
       window.alert("Registration Successful");
-      console.log("successful");
+      // console.log("successful");
       navigate("/login");
     }
   };
@@ -124,7 +132,7 @@ const Register = () => {
                       Phone number
                     </label>
                     <input
-                      type="number"
+                      type="tel"
                       className="form-control"
                       id="num"
                       name="phone"

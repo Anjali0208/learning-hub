@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Header() {
+  // Assuming isLoggedIn is a state that determines whether the user is logged in or not
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Function to handle logout
+  const handleLogout = () => {
+    // Perform logout functionality, e.g., clear local storage, update state, etc.
+    setIsLoggedIn(false);
+  };
+
   return (
     <nav
       className="navbar navbar-expand-lg"
@@ -34,19 +43,44 @@ function Header() {
                 About
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link text-light" to="/login">
-                Login
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-light" to="/register">
-                Register
-              </Link>
-            </li>
+            {/* Conditional rendering for login/register or logout */}
+            {!isLoggedIn ? (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link text-light" to="/login">
+                    Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link text-light" to="/register">
+                    Register
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <li className="nav-item">
+                <button
+                  className="btn btn-link text-light"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </li>
+            )}
+            {/* End of conditional rendering */}
             <li className="nav-item">
               <Link className="nav-link text-light" to="/chatting">
                 Chatting
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link text-light" to="/contact">
+                Contact
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link text-light" to="/logout">
+                Logout
               </Link>
             </li>
           </ul>

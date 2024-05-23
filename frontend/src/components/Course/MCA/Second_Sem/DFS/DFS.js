@@ -1,35 +1,34 @@
 import React from "react";
-import Header from "../../../Header";
 import Button from "@mui/material/Button";
-import "../../MCA/Course.css";
-import Tables from "../../Tables";
+import "../../Course.css";
+import Tables from "../../../Tables";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 
-function DS() {
+function DFS() {
   return (
     <>
-      <div className="course">
-        <h1>Discrete Structure (MCA-101)</h1>
+      <div style={{ marginTop: "40px", textAlign: "center", color: "grey" }}>
+        <h1>Operating Systems with Linux (MCA-105)</h1>
       </div>
 
       {/* 3 links for syllabus, notes and question paper */}
-      <div style={{ textAlign: "center" }}>
-        <Link to="/ds" style={{ textDecoration: "none", marginRight: "20px" }}>
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <Link to="/os" style={{ textDecoration: "none", marginRight: "20px" }}>
           <Button variant="outlined">Syllabus</Button>
         </Link>
 
         <Link
-          to="/notes_ds"
+          to="/notes_os"
           style={{ textDecoration: "none", marginRight: "20px" }}
         >
           <Button variant="outlined">Notes</Button>
         </Link>
 
-        <Link to="/ds_qp" style={{ textDecoration: "none" }}>
+        <Link to="/os_qp" style={{ textDecoration: "none" }}>
           <Button variant="outlined">Question Paper</Button>
         </Link>
       </div>
@@ -54,8 +53,8 @@ function DS() {
 
           <Typography>
             <strong>
-              Chapter / Book Reference: TB1 [Chapters 2, 4, 5, 6, 7]; TB2
-              [Chapters 2, 3]; TB3 [Chapter 4, 7, 8, 10, 11]
+              Chapter/Book Reference: TB1 [Chapter 1, 2, 3]; TB2 [Chapter 2, 3];
+              TB4 [Chapter 1]
             </strong>
           </Typography>
 
@@ -63,19 +62,26 @@ function DS() {
             sx={{ lineHeight: 1.5, paddingTop: 1 }}
             color="text.secondary"
           >
-            <strong>Sets Theory Concepts</strong>: Sets, Subsets, Power Set,
-            Multi-sets, Operations on Sets, Algebra of sets, Principle of
-            Inclusion and Exclusion; Cartesian Product, Relations, Types of
-            Relations, Equivalence Relation, Partial Order Relation, Closure of
-            Relation; Function, Properties of Functions, One-one Function,
-            Many-one Function, Onto function, Composition of a Function,
-            Invertible Function. <br />
-            <strong>Combinatorics</strong>: Permutation, Combination,
-            Combination with Unlimited Repetition, Pigeonhole Principle.
+            <strong>Operating System:</strong>: Concept, Components of Operating
+            System, Operating System Operations, Protection and Security.
+            Computing Environment. <br />
+            <strong>Abstract View of OS:</strong> User view, System View,
+            Operating System Services
+            <strong>System Calls:</strong>: Concept, types of System Calls.
             <br />
-            <strong>Recurrence Relations</strong>: Definition, Solution of
-            Linear First-order Recurrence Relations with Constant Coefficients
-            (Homogeneous and Non-homogeneous).{" "}
+            <strong>Computer System Architecture:</strong>: Single-Processor
+            Systems, Multiprocessor Systems.
+            <br />
+            <strong>Types of Operating systems:</strong>Batch Operating System,
+            Multi-Programmed Operating System, Time-Shared Operating System,
+            Real Time Operating System, Distributed Operating Systems.
+            <br />
+            <strong>Process Management:</strong>Process Concept, Operation on
+            Processes, Cooperating Processes, Inter-Process Communication,
+            Threads.
+            <br />
+            <strong>Linux Operating System: </strong>Introduction to Linux OS,
+            Basic Commands of Linux OS.
           </Typography>
 
           <Divider
@@ -87,8 +93,8 @@ function DS() {
 
           <Typography>
             <strong>
-              Chapter / Book Reference: TB1 [Chapters 1, 4, 5, 10]; TB2
-              [Chapters 1, 4]; TB3 [Chapters 2, 3, 9]
+              Chapter / Book Reference: TB1 [Chapter 5, 6]; TB2 [Chapter 9]; TB3
+              [Chapter-7, 15]
             </strong>
           </Typography>
 
@@ -96,21 +102,19 @@ function DS() {
             sx={{ lineHeight: 1.5, paddingTop: 1 }}
             color="text.secondary"
           >
-            <strong>Formal logic:</strong> Statement, Symbolic Representation,
-            Tautologies, Fallacy, Operations on Logic, Logically Equivalence,
-            Algebra of Propositions, Arguments and Validity, Rules of Inference
-            for Propositional Logic, Normal Forms. <br />
-            <strong>Methods of Proofs:</strong> Direct Proof, Indirect Proof,
-            Proof by Contradiction, Proof by Exhaustive Cases, Principle of
-            Mathematical Induction, Principle of Complete Induction.
+            <strong>Process Synchronization:</strong> Introduction, The
+            Critical-Section Problem with solution, Bakery Algorithm,
+            Synchronization hardware, Semaphores, Semaphores Implementation,
+            Classical Problems of Synchronization with algorithms, Critical
+            Regions, Monitors.
             <br />
-            <strong>Lattices:</strong> Poset, Lattice, Sublattices, Types of
-            Lattices - Bounded Lattice, Distributive Lattice, Complemented
-            Lattice; Isomorphic Lattices.
+            <strong>CPU Scheduling:</strong> Basic Concepts, Scheduling
+            Criteria, Scheduling algorithms, Multilevel Queue Scheduling,
+            Multilevel Feedback Queue Scheduling.
             <br />
-            <strong>Boolean Algebra:</strong> Definition, Subalgebra, Boolean
-            Function, Boolean Expressions, Minimization of Boolean Function,
-            K-Map.
+            <strong>Linux Operating System:</strong> Process Management Commands
+            and System Calls.
+            <br />
           </Typography>
 
           <Divider
@@ -122,8 +126,7 @@ function DS() {
 
           <Typography>
             <strong>
-              Chapter / Book Reference: TB1 [Chapters 3, 11]; TB2 [Chapters 3,
-              6]; TB3 [Chapters 6, 12, 20]
+              Chapter / Book Reference: TB1 [Chapter 7, 8, 9]; TB3 [Chapter 15]
             </strong>
           </Typography>
 
@@ -131,16 +134,17 @@ function DS() {
             sx={{ lineHeight: 1.5, paddingTop: 1 }}
             color="text.secondary"
           >
-            <strong>Number Theory:</strong> Primes, Division Algorithm, Greatest
-            Common Divisor (GCD), LCM, Euclidean Algorithm, Fundamental Theorem
-            of Arithmetic, Congruences, Linear Congruence equations,
-            Chinese-Remainder Theorem, Euler Phi function, Fermat’s Little
-            Theorem, Applications of Congruences – ISBN, UPC, Introduction to
-            Cryptography.
+            <strong>Deadlock:</strong> System Models, Deadlock Characterization,
+            Resource Allocation Graph, Deadlock Prevention, Avoidance, Detection
+            and Recovery, Banker’s algorithm.
             <br />
-            <strong>Group Theory:</strong> Definition, Groups as Symmetries,
-            Subgroups, Cosets, Cyclic Group, Normal Subgroups, Quotient Group,
-            Lagrange’s Theorem, Homomorphism, Permutation Group.
+            <strong>Memory Management: Main Memory</strong> Contiguous Memory
+            Allocation, Fragmentation, Paging, And Segmentation. <br />
+            <strong>Virtual Memory:</strong>Demand Paging, Page Replacement,
+            Page replacement algorithm, Allocation of frames, Thrashing.
+            <br />
+            <strong>Linux Operating System:</strong>Memory Management Commands
+            and System Calls.
           </Typography>
 
           <Divider
@@ -152,8 +156,8 @@ function DS() {
 
           <Typography>
             <strong>
-              Chapter / Book Reference: TB1 [Chapter 8]; TB2 [Chapter 5]; TB3
-              [Chapters 14, 15]
+              Chapter / Book Reference: TB1[Chapter 9, 10, 11, 12]; TB2 [Chapter
+              5, 11]; TB3[Chapter 3, 7]
             </strong>
           </Typography>
 
@@ -161,14 +165,21 @@ function DS() {
             sx={{ lineHeight: 1.5, paddingTop: 1 }}
             color="text.secondary"
           >
-            <strong>Graph Theory:</strong> Graphs, Types of Graphs, Degree of a
-            Vertex, Subgraphs and Isomorphic Graphs, Representation of Graphs,
-            Operations of Graphs, Walks and Paths, Connectivity, Weighted
-            Graphs, Euler Graph, Fluery’s Algorithm, Hamiltonian Graph,
-            Cut-Vertices and Cut-Edges, Planar Graphs, Euler’s formula, Graph
-            Colouring - Vertex Colouring, Edge Colouring, Chromatic Number and
-            Chromatic Polynomial, Welch-Powell Algorithm, Four Colour
-            Conjecture, Five Colour Theorem (with proof).
+            <strong>
+              File, Devices and Secondary Storage Management: File-System
+              Interface:
+            </strong>{" "}
+            Concepts, Access Methods, Directory and Disk Structure. File-System
+            Structure, File-System Implementation, Directory Implementation,
+            Allocation Methods, Free-Space Management. <br />
+            <strong>Devices:</strong>Types of devices, Channels and Control
+            Unit, Multiple Paths, Block Multiplexing. <br />
+            <strong>Secondary Storage:</strong>Mass-Storage Structure, Disk
+            Structure, Disk Scheduling Algorithms, Disk Management, RAID
+            structure of disk.
+            <br />
+            <strong>Linux Operating System:</strong>File Management Commands and
+            System Calls.
           </Typography>
         </CardContent>
       </Card>
@@ -215,4 +226,4 @@ function DS() {
   );
 }
 
-export default DS;
+export default DFS;
