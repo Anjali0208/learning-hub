@@ -1,109 +1,139 @@
-import React, { useState } from "react";
 
-function QuoraFeature() {
-  const [questions, setQuestions] = useState([]);
-  const [newQuestion, setNewQuestion] = useState("");
-  const [newComment, setNewComment] = useState("");
-  const [activeQuestionIndex, setActiveQuestionIndex] = useState(null);
 
-  const handleQuestionChange = (e) => {
-    setNewQuestion(e.target.value);
+import React, { useState, useRef, useEffect } from "react";
+import "./Chatting.css";
+import Helmet from "react-helmet";
+
+const Chatting = () => {
+  const [messages, setMessages] = useState([
+    { type: "incoming", text: "Hi there 👋<br>How can I help you today?" },
+  ]);
+  const [message, setMessage] = useState("");
+  const chatboxRef = useRef(null);
+
+  useEffect(() => {
+    chatboxRef.current.scrollTo(0, chatboxRef.current.scrollHeight);
+  }, [messages]);
+
+  const createChatLi = (message, className) => {
+    const chatLi = { type: className, text: message };
+    return chatLi;
   };
 
-  const handleCommentChange = (e) => {
-    setNewComment(e.target.value);
-  };
+  const generateResponse = async (userMessage) => {
+    const API_URL = "/generate-response"; // This will be proxied to http://localhost:8080/generate-response
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message: userMessage }),
+        });
 
-  const handleLikeQuestion = (questionIndex) => {
-    const updatedQuestions = [...questions];
-    updatedQuestions[questionIndex].liked = true;
-    setQuestions(updatedQuestions);
-  };
+        const textResponse = await response.text(); // Get the response as text
 
-  const handleSubmitQuestion = () => {
-    if (newQuestion.trim() !== "") {
-      setQuestions([
-        ...questions,
-        { question: newQuestion, liked: false, comments: [] },
-      ]);
-      setNewQuestion("");
+        // Log the response for debugging purposes
+        console.log("Raw response from server:", textResponse);
+
+        // Attempt to parse the response as JSON
+        const data = JSON.parse(textResponse);
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to generate response');
+        }
+
+        return data.message.trim();
+    } catch (error) {
+        console.error("Error:", error);
+        return "Oops! Something went wrong. Please try again.";
     }
-  };
+};
 
-  const handleSubmitComment = (questionIndex) => {
-    if (newComment.trim() !== "") {
-      const updatedQuestions = [...questions];
-      updatedQuestions[questionIndex].comments.push(newComment);
-      setQuestions(updatedQuestions);
-      setNewComment("");
+
+
+  const handleSendMessage = async () => {
+    const trimmedMessage = message.trim();
+    if (trimmedMessage) {
+      const newMessages = [
+        ...messages,
+        createChatLi(trimmedMessage, "outgoing"),
+      ];
+      setMessages(newMessages);
+      setMessage("");
+
+      setTimeout(async () => {
+        const responseMessage = await generateResponse(trimmedMessage);
+        const newIncomingMessage = createChatLi(responseMessage, "incoming");
+        setMessages([...newMessages, newIncomingMessage]);
+        chatboxRef.current.scrollTo(0, chatboxRef.current.scrollHeight);
+      }, 600);
     }
   };
 
   return (
     <div>
-      <h1>Welcome to Quora</h1>
-      <div>
-        <textarea
-          rows="4"
-          cols="50"
-          value={newQuestion}
-          onChange={handleQuestionChange}
-          placeholder="Ask your question..."
-        ></textarea>
-        <br />
-        <button onClick={handleSubmitQuestion}>Ask</button>
-      </div>
-      <div>
-        <h2>Questions</h2>
-        {questions.length === 0 ? (
-          <p>No questions yet.</p>
-        ) : (
-          <ul>
-            {questions.map((question, index) => (
-              <li key={index}>
-                <h3>{question.question}</h3>
-                <button
-                  disabled={question.liked}
-                  onClick={() => handleLikeQuestion(index)}
-                >
-                  {question.liked ? "Liked" : "Like"}
-                </button>
-                {activeQuestionIndex === index ? (
-                  <>
-                    <textarea
-                      rows="2"
-                      cols="50"
-                      value={newComment}
-                      onChange={handleCommentChange}
-                      placeholder="Add your comment..."
-                    ></textarea>
-                    <br />
-                    <button onClick={() => handleSubmitComment(index)}>
-                      Comment
-                    </button>
-                    <button onClick={() => setActiveQuestionIndex(null)}>
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button onClick={() => setActiveQuestionIndex(index)}>
-                      Add Comment
-                    </button>
-                    <ul>
-                      {question.comments.map((comment, commentIndex) => (
-                        <li key={commentIndex}>{comment}</li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
+      <Helmet>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0"
+        />
+      </Helmet>
+
+      <button
+        className="chatbot-toggler"
+        onClick={() => document.body.classList.toggle("show-chatbot")}
+      >
+        <span className="material-symbols-rounded">mode </span>
+        <span className="material-symbols-outlined">close</span>
+      </button>
+      <div className="chatbot">
+        <header>
+          <h2>Chatbot</h2>
+          <span
+            className="close-btn material-symbols-outlined"
+            onClick={() => document.body.classList.remove("show-chatbot")}
+          >
+            close
+          </span>
+        </header>
+        <ul className="chatbox" ref={chatboxRef}>
+          {messages.map((msg, index) => (
+            <li key={index} className={`chat ${msg.type}`}>
+              <span className="material-symbols-outlined">
+                {msg.type === "incoming" ? "smart_toy" : "person"}
+              </span>
+              <p dangerouslySetInnerHTML={{ __html: msg.text }}></p>
+            </li>
+          ))}
+        </ul>
+        <div className="chat-input">
+          <textarea
+            placeholder="Enter a message..."
+            spellCheck="false"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage();
+              }
+            }}
+          ></textarea>
+          <span
+            className="material-symbols-rounded"
+            onClick={handleSendMessage}
+          >
+            send
+          </span>
+        </div>
       </div>
     </div>
   );
-}
+};
 
-export default QuoraFeature;
+export default Chatting;
