@@ -12,8 +12,8 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 
 
-const API_KEY = 'AIzaSyBS6_4J1cjNiDShyPhx2QP2yJ6QD5ZlY4Y'; // Replace with your actual API key
-const genAI = new GoogleGenerativeAI(API_KEY);
+const GOOGLE_KEY = process.env.API_KEY; // Replace with your actual API key
+const genAI = new GoogleGenerativeAI(GOOGLE_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
 app.use(bodyParser.json());
